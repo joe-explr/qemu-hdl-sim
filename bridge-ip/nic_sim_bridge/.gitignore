@@ -1,0 +1,6 @@
+*
+!.gitignore
+!hdl
+!hdl/*
+!Makefile
+!script_ippkg.tcl

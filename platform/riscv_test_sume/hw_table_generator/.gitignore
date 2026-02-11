@@ -1,0 +1,5 @@
+*
+!.gitignore
+!hw_config.ini
+!hw_table_config_parser.py
+!hwtab.coe

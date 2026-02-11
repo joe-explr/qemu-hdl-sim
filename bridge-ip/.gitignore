@@ -1,0 +1,10 @@
+*
+!.gitignore
+!nic_sim_bridge
+!nic_sim_bridge/*
+!QEMUPCIeBridge
+!QEMUPCIeBridge/*
+!uart_sim_1.0
+!uart_sim_1.0/*
+!acc.h
+!makefile.mk

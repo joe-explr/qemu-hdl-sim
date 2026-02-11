@@ -1,0 +1,76 @@
+Start with a folder with acc.h accelerator.c bridge-ip/ and the scripts folder.
+Run each script from in the scripts folder.
+
+(1) ./build-qemus.sh installs qemu-10.1.3 and makes two versions of it:
+	The untouched one
+	The one with the patch
+
+(2) ./make-bridge.sh makes the bridge that the cosim uses.
+(3) ./build_bridge-ip to build the bridge-ip files
+
+
+Steps to get the Simulation running:
+==========================================
+[Current fix]
+
+(1) Replace the "platform" directory present in the current project root directory with the "platform" directory
+present in the tar file : /var/services/homes/jbantony/platform-cosim.tar.gz
+
+tar -xzvf /var/services/homes/jbantony/platform-cosim.tar.gz -C {your project root directory}
+
+(2) cd into scripts dir. and Run ./saved_session.sh to set the required environment variables.
+
+(3) Run the below vivado command from the project root folder:
+	vivado -mode batch -source vcu128_base.tcl -log vivado_create.log -journal vivado_create.jou
+
+(4) Open a VNC session, open Xterm and go into the same project root folder. 
+(4.1) Go into scripts folder 
+		`cd scripts && source ./saved_session.sh` to set the required environment variables again.
+
+(5) Run the simulation script (run_sim.tcl) command from the project root folder:
+	vivado -mode batch -log vivado_sim.log -journal vivado_sim.jou -source scripts/run_sim.tcl -tclargs --sim-mode behavioral
+
+If everything works correctly, a VCS gui window will start-up with interactive menu to run the simulation.
+
+(6) Start the simulation and keep it running! simulation must run for the Custom VM to run.
+
+Running QEMU VMs.
+=======================
+
+(1) To restore environment variables, only if necessary, if running from a new shell session.
+ (1.1)Go into scripts folder 
+		cd scripts && source ./saved_session.sh to set the required environment variables again.
+(2) Go into scripts dir and run ./run-cosim.sh.
+
+(3) original un patched VM: Open VNC sessions at port 5909. 
+Patched FPGA VM : Open VNC sessions at port 5908
+
+
+Note:
+=========== 
+1. Feel free to edit the ports as suitable. In total 3 VNC sessions will be open at the end.
+Use the saved_session.sh script to restore environment variables whenever necessary.
+
+2. When trying to execute a shell script file, check if its granted the requisite executable permissions to get it running.
+
+3. check the files in qemu_logs if there are issues with run-cosim. It's posisble that kvm is not
+enabled or glibc is outdated depending on hardware/OS
+
+4. The disk files required to run the projects are currently present in "/var/services/homes/jbantony/qemu-hdl-cosim_orig/images/", 
+
+(4.1) Only if you lack permssions to run on them, copy to a suitable location and edit run_cosim script to point to that location:
+npu_ubuntu_64_1804.qcow2
+npu_ubuntu_64_1804_old.qcow2
+
+5. Use kill-vnc-ports shell script to kill any running process in ports 5908, 5909.
+
+
+IMPORTANT:
+============
+FPGA VM 
+username: fpga 
+passwd: fpga
+
+Dummy VM:
+username: jbantony
+passwd: password

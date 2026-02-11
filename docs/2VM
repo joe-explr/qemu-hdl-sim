@@ -1,0 +1,55 @@
+RUNNING NIC HDL SIMULATION
+
+source /var/services/homes/mkpatel/vivado-2017.1.sh
+cd /var/services/homes/mkpatel/NIC/sim_nic/sume_mb_minimal_sim2.sim/sim_1/behav/
+./simulate.sh &
+
+*** or ***
+
+run through vivado
+
+=====
+
+NIC and PCIE BRIDGE IPs
+/var/services/homes/mkpatel/FPGA_IP
+
+=====
+
+RUNNING E1000 QEMU
+
+cd /var/services/homes/mkpatel/RC_QEMU/qemu-e1000-lockstep/build
+./10g_launch e1000 &
+
+=====
+
+RUNNING FPGA-NIC QEMU
+
+cd /var/services/homes/mkpatel/RC_QEMU/qemu-e1000-lockstep/build
+./10g_launch 10g &
+
+=====
+
+In QEMU monitor the command `hdl_lockstep on` will turn on lockstep mode. `hdl_lockstep off` will turn off lockstep mode. 
+
+QEMU details:
+user- mrunal
+pass- hello123
+
+To test: 
+On e1000 VM:
+    sudo ifconfig ens3 up
+    sudo ifconfig ens3 1.2.3.5
+    nc -v -l 8888 > /dev/null
+    *** go to qemu monitor and turn on hdl_lockstep ***
+
+On fpga-nic VM:
+    cd nic_driver
+    sudo insmod nf10.ko
+    sudo ifconfig nf0 up
+    sudo ifconfig nf0 1.2.3.4
+    *** type the following command but before hitting enter, turn on hdl_lockstep ***
+    dd if=/dev/zero bs=1024K count=512 | nc -v 1.2.3.5 8888
+
+Notes: 
+
+Both QEMU VMs create tap interfaces on brdummy bridge.

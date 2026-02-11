@@ -1,0 +1,14 @@
+Command to run Qemu 10: 
+
+./build/x86_64-softmmu/qemu-system-x86_64 -L ./pc-bios -m 8G -hda /var/services/homes/jbantony/qemu-hdl-cosim_orig/images/npu_ubuntu_64_1804.qcow2 -netdev tap,id=net0,br=bridge-joseph,helper=/compas/projects/qemu-hdl-cosim/bridge-helper/ubuntu_18.04/qemu-bridge-helper_orig -chardev vc,id=char0 -snapshot -boot d -enable-kvm -display vnc=:9 -D qemu_10_output.log -d in_asm,out_asm,op,op_opt,op_ind,int,exec,cpu,mmu,unimp,guest_errors > ../qemu_10_logs.log 2>&1
+
+
+Patch version command:
+
+./build/qemu-system-x86_64 -L ./pc-bios -m 8G -hda /var/services/homes/jbantony/qemu-hdl-cosim_orig/images/npu_ubuntu_64_1804.qcow2 -device accelerator-pcie,netdev=net0,chardev=char0 -netdev tap,id=net0,br=bridge-joseph,helper=/compas/projects/qemu-hdl-cosim/bridge-helper/ubuntu_18.04/qemu-bridge-helper_orig -chardev vc,id=char0 -snapshot -boot d -enable-kvm -display vnc=:8 -D qemu_output.log -d in_asm,out_asm,op,op_opt,op_ind,int,exec,cpu,mmu,unimp,guest_errors > ../qemu_logs.log 2>&1
+
+Orginal version :
+
+$QEMU $MEMORY $UNTIMED $DRIVE $OPTS $E1000_TAP2 $E1000_TAP_DUMMY
+
+./build/qemu-system-x86_64 -L ./pc-bios -m 8G -enable-kvm -cpu host -smp cores=8 -hda /var/services/homes/jbantony/qemu-hdl-cosim_orig/images/npu_ubuntu_64_1804_old.qcow2 -device e1000,mac=$MACADDR1,netdev=net1 -netdev tap,id=net1,br=bridge-joseph,helper=/compas/projects/qemu-hdl-cosim/bridge-helper/ubuntu_18.04/qemu-bridge-helper_orig -display vnc=:9 -D ../qemu_output.log -d in_asm,out_asm,op,op_opt,op_ind,int,exec,cpu,mmu,unimp,guest_errors > ../qemu_logs.log 2>&1

@@ -1,0 +1,6 @@
+*
+!.gitignore
+!vcu128_base
+!vcu128_base/**
+!riscv_test_sume
+!riscv_test_sume/**

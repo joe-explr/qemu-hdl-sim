@@ -1,0 +1,9 @@
+*
+!.gitignore
+!ariane/
+!ariane/**
+!flute_64G/
+!flute_64G/**
+!riscv64_1.0/
+!riscv64_1.0/**
+

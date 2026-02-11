@@ -1,0 +1,36 @@
+To setup qemu:
+
+tar -xf qemu.tar.gx
+patch -p0 < qemupcie.patch
+cd qemu-2.10.0-rc3
+mkdir build
+cd build
+../configure --target-list=x86_64-softmmu --disable-vnc --enable-sdl --enable-curses
+
+modify LIBS+ in config-hosts.mak to include "-lczmq -lzmq"
+
+make -j
+
+
+To launch: 
+
+The options and variables are described in 10g_launch
+
+
+copy /var/services/homes/mkpatel/RC_QEMU/10g_launch.sh to build folder.
+
+for user network connection
+./10g_launch.sh user
+
+for e1000 tap connection
+./10g_launch.sh 10g
+
+for npu nic tap connection
+./10g_launch.sh
+
+
+
+For hardware:
+the project is in:
+/var/service/homes/mkpatel/NIC/sim_nic
+

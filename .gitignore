@@ -1,0 +1,16 @@
+*
+!.gitignore
+!bridge-ip
+!bridge-ip/*
+!docs
+!docs/*
+!scripts
+!scripts/*
+!qemu-cosim.patch
+!qemu-orig.patch
+!acc.h
+!accelerator_pcie.c
+!platform
+!platform/*
+!scripts_new
+!scripts_new/*
