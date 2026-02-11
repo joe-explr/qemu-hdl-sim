@@ -1,0 +1,62 @@
+diff --git a/qemu-10.1.3_orig/configs/devices/i386-softmmu/default.mak b/qemu-10.1.3/configs/devices/i386-softmmu/default.mak
+index bc0479a7..93fc7bd0 100644
+--- a/qemu-10.1.3_orig/configs/devices/i386-softmmu/default.mak
++++ b/qemu-10.1.3/configs/devices/i386-softmmu/default.mak
+@@ -31,3 +31,5 @@
+ # CONFIG_Q35=n
+ # CONFIG_MICROVM=n
+ # CONFIG_NITRO_ENCLAVE=n
++
++CONFIG_ACCELERATOR=y
+\ No newline at end of file
+diff --git a/qemu-10.1.3_orig/hw/misc/Kconfig b/qemu-10.1.3/hw/misc/Kconfig
+index 4e356574..83833d0a 100644
+--- a/qemu-10.1.3_orig/hw/misc/Kconfig
++++ b/qemu-10.1.3/hw/misc/Kconfig
+@@ -25,6 +25,11 @@ config PCI_TESTDEV
+     default y if TEST_DEVICES
+     depends on PCI
+ 
++config ACCELERATOR
++    bool
++    default y if PCI_DEVICES
++    depends on PCI
++    
+ config EDU
+     bool
+     default y if TEST_DEVICES
+diff --git a/qemu-10.1.3/hw/misc/accelerator_pcie.c b/qemu-10.1.3/hw/misc/accelerator_pcie.c
+new file mode 120000
+index 00000000..f5c9ba30
+--- /dev/null
++++ b/qemu-10.1.3/hw/misc/accelerator_pcie.c
+@@ -0,0 +1 @@
++../../../accelerator_pcie.c
+\ No newline at end of file
+diff --git a/qemu-10.1.3_orig/hw/misc/meson.build b/qemu-10.1.3/hw/misc/meson.build
+index b1d8d8e5..935dbce1 100644
+--- a/qemu-10.1.3_orig/hw/misc/meson.build
++++ b/qemu-10.1.3/hw/misc/meson.build
+@@ -1,9 +1,14 @@
++zmq_dep  = dependency('libzmq',  required: true)
++czmq_dep = dependency('libczmq', required: true)
++
+ system_ss.add(when: 'CONFIG_APPLESMC', if_true: files('applesmc.c'))
+ system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
+ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
+ system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
+ system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
++system_ss.add(when: ['CONFIG_ACCELERATOR', czmq_dep, zmq_dep], if_true: files('accelerator_pcie.c'))
++
+ system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
+ system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
+ system_ss.add(when: 'CONFIG_LED', if_true: files('led.c'))
+diff --git a/qemu-10.1.3/include/acc/acc.h b/qemu-10.1.3/include/acc/acc.h
+new file mode 120000
+index 00000000..f741c447
+--- /dev/null
++++ b/qemu-10.1.3/include/acc/acc.h
+@@ -0,0 +1 @@
++../../../acc.h
+\ No newline at end of file

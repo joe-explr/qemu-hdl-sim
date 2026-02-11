@@ -1,4 +1,4 @@
-# Setting up QEMU
+# Setting up QEMU 10.1.3
 ----------------------------
 1. Install Dependencies:
 
@@ -11,19 +11,19 @@
     On Ubuntu 16.04:
     `apt install libczmq-dev libzmq-dev libncurses5-dev`
 
-2. Download QEMU 2.10 rc3
+2. Download QEMU 10.1.3
 
     ```
-    wget http://download.qemu-project.org/qemu-2.10.0-rc3.tar.xz
-    tar -xJf qemu-2.10.0-rc3.tar.xz
+    wget https://download.qemu.org/qemu-10.1.3.tar.xz
+    tar -xJf qemu-10.1.3.tar.xz
     ```
 
 3. Apply the patch and create symbolic links
 
     ```
     patch -s -p0 < qemu-cosim.patch
-    mkdir -p qemu-2.10.0-rc3/include/acc
-    cd qemu-2.10.0-rc3/include/acc
+    mkdir -p qemu-10.1.3/include/acc
+    cd qemu-10.1.3/include/acc
     ln -s ../../../acc.h ./
     cd ../../hw/misc
     ln -s ../../../accelerator_pcie.c ./
@@ -33,7 +33,7 @@
 4. Configure the PCIe pseudo device (not required anymore)
 
     ```
-    cd qemu-2.10.0-rc3
+    cd qemu-10.1.3
     ```
 
     Modify `include/acc/acc.h` and `hw/misc/accelerator_pcie.c` if needed.
