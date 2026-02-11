@@ -5,14 +5,6 @@ It couples a custom QEMU PCIe endpoint model to HDL simulation through ZeroMQ/CZ
 
 Primary focus in this fork: migration and stabilization for `QEMU 10.1.3`.
 
-## Quick Summary (Recruiters)
-
-- Built a full-stack co-simulation integration across virtualization, systems C, hardware simulation, and scripting.
-- Ported and maintained a custom QEMU PCIe device model for modern `QEMU 10.1.3`.
-- Added stronger runtime diagnostics and fail-fast behavior for distributed VM/HDL debug.
-- Integrated memory-mapped I/O, MSI-X interrupts, NIC packet forwarding, and serial channel plumbing between VM and HDL.
-- Delivered reproducible scripts for building patched/unpatched QEMU and launching comparative VM workflows.
-
 ## Quick Summary (Researchers)
 
 - Reproduces the QEMU-HDL co-simulation concept from the referenced FPGA co-sim paper, adapted to a newer QEMU codebase.
